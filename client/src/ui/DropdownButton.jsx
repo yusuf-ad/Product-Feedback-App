@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNewFeedback } from "../../contexts/NewFeedbackContext";
+import { useNewFeedback } from "../contexts/NewFeedbackContext";
 
 function DropdownButton({
   menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"],
@@ -33,18 +33,18 @@ function DropdownButton({
   }, [active, action, dispatch]);
 
   return (
-    <div onClick={handleClick} className=" relative flex items-center mt-1">
-      <button className="group/button mt-5 bg-grey-light px-6 h-14 rounded-md w-full border-2 border-transparent transition-colors duration-100 hover:border-purple-default/50 shadow-sm">
+    <div onClick={handleClick} className=" relative mt-1 flex items-center">
+      <button className="group/button mt-5 h-14 w-full rounded-md border-2 border-transparent bg-grey-light px-6 shadow-sm transition-colors duration-100 hover:border-purple-default/50">
         <p className="flex justify-between">
-          <span className="text-gray-700 text-lg mr-2">{active}</span>
+          <span className="mr-2 text-lg text-gray-700">{active}</span>
           <span>
-            <i className="text-blue-default rotate-0  text-sm fa-solid fa-chevron-down transition duration-300 group-focus/button:rotate-180"></i>
+            <i className="fa-solid fa-chevron-down  rotate-0 text-sm text-blue-default transition duration-300 group-focus/button:rotate-180"></i>
           </span>
         </p>
       </button>
       <div
         ref={menu}
-        className="absolute z-20  top-8 rounded-xl w-full  bg-white shadow-lg translate-y-0 duration-300 opacity-0 pointer-events-none "
+        className="pointer-events-none absolute  top-8 z-20 w-full  translate-y-0 rounded-xl bg-white opacity-0 shadow-lg duration-300 "
       >
         <ul>
           {menuItems.map((item) => (
@@ -60,7 +60,7 @@ function DropdownButton({
 
 function DropdownItem({ isActive, children }) {
   return (
-    <li className="dropItem text-lg text-slate-500 py-4 ">
+    <li className="dropItem py-4 text-lg text-slate-500 ">
       {children}
       {isActive && (
         <span className="text-purple-default">

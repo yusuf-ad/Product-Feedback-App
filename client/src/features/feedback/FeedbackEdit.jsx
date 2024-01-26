@@ -1,12 +1,13 @@
-import SelectionField from "../components/Feedbacks/SelectionField";
-import InputField from "../components/Feedbacks/InputField";
-import TextAreaField from "../components/Feedbacks/TextAreaField";
+import InputField from "./InputField";
+import SelectionField from "./SelectionField";
+import TextAreaField from "./TextAreaField";
+
 import { useEffect } from "react";
-import { useFeedbacks } from "../contexts/FeedbacksContext";
-import { useNewFeedback } from "../contexts/NewFeedbackContext";
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import { useNavigate, useParams } from "react-router-dom";
 
-import BASE_URL from "../utils/BASE_URL";
+import BASE_URL from "../../utils/BASE_URL";
 
 function FeedbackEdit() {
   const { titleInput, detailsInput } = useNewFeedback();
@@ -50,7 +51,7 @@ function FeedbackEdit() {
       console.log(data);
 
       const filteredFeedbacks = feedbacks.filter(
-        (item) => item._id !== data._id
+        (item) => item._id !== data._id,
       );
 
       setFeedbacks([...filteredFeedbacks, data]);
@@ -95,18 +96,20 @@ function FeedbackEdit() {
   }
 
   return (
-    <div className="container max-w-2xl  md:p-0 p-12">
-      <button onClick={handleReturnBack} className="flex items-center group">
+    <div className="container max-w-2xl  p-12 md:p-0">
+      <button onClick={handleReturnBack} className="group flex items-center">
         <span>
-          <i className="text-blue-default  text-xs mr-4 fa-solid fa-chevron-left"></i>
+          <i className="fa-solid  fa-chevron-left mr-4 text-xs text-blue-default"></i>
         </span>
         <span className="mt-1 font-bold text-gray-600 transition duration-300 group-hover:underline">
           Go Back
         </span>
       </button>
 
-      <div className="relative bg-white px-8 py-16 mt-20 rounded-xl shadow-sm">
-        <h1 className="text-3xl">Editing 'Q&A within the challenge hubs'</h1>
+      <div className="relative mt-20 rounded-xl bg-white px-8 py-16 shadow-sm">
+        <h1 className="text-3xl">
+          Editing &apos;Q&A within the challenge hubs&apos;
+        </h1>
 
         <form onSubmit={handleSubmit} className="mt-16 flex flex-col gap-8">
           <InputField />
@@ -123,7 +126,7 @@ function FeedbackEdit() {
 
           <TextAreaField />
 
-          <div className="flex gap-4 mt-6">
+          <div className="mt-6 flex gap-4">
             <button
               onClick={handleDelete}
               className="btn bg-red-default hover:bg-red-hover"
@@ -142,8 +145,8 @@ function FeedbackEdit() {
           </div>
         </form>
 
-        <div className="absolute -top-8 left-6 bg-customGradient w-16 h-16 rounded-full">
-          <i className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 text-2xl text-white fa-solid fa-plus"></i>
+        <div className="absolute -top-8 left-6 h-16 w-16 rounded-full bg-customGradient">
+          <i className="fa-solid fa-plus absolute left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 text-2xl text-white"></i>
         </div>
       </div>
     </div>

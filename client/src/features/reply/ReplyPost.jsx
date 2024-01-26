@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import Error from "./Error";
+import Error from "../../ui/Error";
 
 export function ReplyPost({ reply, setReply, createReply, username }) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -15,7 +15,7 @@ export function ReplyPost({ reply, setReply, createReply, username }) {
 
   return (
     <>
-      <div className="w-[calc(100%-76px)] mt-2 mb-6 self-end flex gap-8 items-start">
+      <div className="mb-6 mt-2 flex w-[calc(100%-76px)] items-start gap-8 self-end">
         <textarea
           ref={textArea}
           value={reply}
@@ -25,9 +25,9 @@ export function ReplyPost({ reply, setReply, createReply, username }) {
             setReply(e.target.value);
             setErrorMsg("");
           }}
-          className={`shadow-sm  bg-grey-light h-32 px-6 py-4 rounded-md w-full resize-none ${
+          className={`h-32  w-full resize-none rounded-md bg-grey-light px-6 py-4 shadow-sm ${
             errorMsg
-              ? "outline-red-default/70 text-red-default"
+              ? "text-red-default outline-red-default/70"
               : "outline-purple-default/50"
           }`}
           name="feedback-detail"

@@ -1,5 +1,5 @@
 import { useNewFeedback } from "../../contexts/NewFeedbackContext";
-import Error from "../UI/Error";
+import Error from "../../ui/Error";
 
 function InputField() {
   const { titleInput, title, dispatch, titleError: error } = useNewFeedback();
@@ -14,7 +14,7 @@ function InputField() {
 
   return (
     <div>
-      <label className="font-bold text-lg" htmlFor="title">
+      <label className="text-lg font-bold" htmlFor="title">
         Feedback Title
       </label>
       <p className="text-gray-600 ">Add a short, descriptive headline</p>
@@ -22,9 +22,9 @@ function InputField() {
         ref={titleInput}
         value={title}
         onChange={handleChange}
-        className={`shadow-sm mt-5 bg-grey-light px-6 h-14 rounded-md w-full ${
+        className={`mt-5 h-14 w-full rounded-md bg-grey-light px-6 shadow-sm ${
           error
-            ? "outline-red-default/70 text-red-default"
+            ? "text-red-default outline-red-default/70"
             : "outline-purple-default/50"
         }`}
         id="title"

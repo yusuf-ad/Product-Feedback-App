@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { useRef } from "react";
+import { useFeedbacks } from "../contexts/FeedbacksContext";
 
 const sortItems = [
   "Most upvotes",
@@ -24,18 +24,18 @@ function SortButton() {
   }
 
   return (
-    <div onClick={handleClick} className="relative flex items-center mt-1">
+    <div onClick={handleClick} className="relative mt-1 flex items-center">
       <button className="text-white hover:text-grey-hover">
         <p>
-          Sort by: <span className="font-bold mr-2">{sortBy}</span>
+          Sort by: <span className="mr-2 font-bold">{sortBy}</span>
           <span>
-            <i className="text-xs fa-solid fa-chevron-down"></i>
+            <i className="fa-solid fa-chevron-down text-xs"></i>
           </span>
         </p>
       </button>
       <div
         ref={sortList}
-        className="absolute rounded-xl w-56 bg-white shadow-sm top-0 translate-y-0 duration-300 pointer-events-none opacity-0 "
+        className="pointer-events-none absolute top-0 w-56 translate-y-0 rounded-xl bg-white opacity-0 shadow-sm duration-300 "
       >
         <ul>
           {sortItems.map((item) => (

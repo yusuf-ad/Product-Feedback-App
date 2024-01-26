@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { useFeedbacks } from "../contexts/FeedbacksContext";
 
-export function RoadmapSidebar() {
+function RoadmapSidebar() {
   const { plannedFeedbacks, progressFeedbacks, liveFeedbacks } = useFeedbacks();
 
   return (
-    <div className="rounded-xl p-6 bg-white shadow-sm">
-      <div className="flex justify-between  items-center">
+    <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="flex items-center  justify-between">
         <h3 className="">Roadmap</h3>
         <Link
-          className="text-blue-default underline decoration-1 font-bold hover:text-blue-hover "
+          className="font-bold text-blue-default underline decoration-1 hover:text-blue-hover "
           to={"/roadmap"}
         >
           View
@@ -36,3 +36,5 @@ export function RoadmapSidebar() {
     </div>
   );
 }
+
+export default RoadmapSidebar;

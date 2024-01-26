@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
-export function Feedback({ feedback }) {
+function Feedback({ feedback }) {
   const { upvoteFeedback } = useFeedbacks();
 
   return (
-    <div className="bg-white p-6 rounded-xl mt-8 flex gap-8 items-center shadow-sm ">
+    <div className="mt-8 flex items-center gap-8 rounded-xl bg-white p-6 shadow-sm ">
       <div
         onClick={() => upvoteFeedback(feedback._id)}
-        className={`rounded-xl  transition-colors duration-200 cursor-pointer ${
+        className={`cursor-pointer  rounded-xl transition-colors duration-200 ${
           feedback.upvoted
             ? "bg-blue-default text-white"
             : "bg-grey-light hover:bg-grey-hover"
@@ -18,7 +18,7 @@ export function Feedback({ feedback }) {
         <p className={`flex flex-col items-center px-3 py-2 font-bold`}>
           <span>
             <i
-              className={`text-blue-default text-sm fa-solid fa-chevron-up ${
+              className={`fa-solid fa-chevron-up text-sm text-blue-default ${
                 feedback.upvoted ? "text-white" : ""
               }`}
             ></i>
@@ -27,26 +27,28 @@ export function Feedback({ feedback }) {
         </p>
       </div>
       <Link className="w-full" to={`/feedback/detail/${feedback._id}`}>
-        <div className="cursor-pointer group flex-grow transition-colors duration-300">
-          <h4 className="text-xl mb-1 group-hover:text-blue-default">
+        <div className="group flex-grow cursor-pointer transition-colors duration-300">
+          <h4 className="mb-1 text-xl group-hover:text-blue-default">
             {feedback.title}
           </h4>
           <p className="text-gray-600">{feedback.details}</p>
-          <p className="bg-grey-light mt-3  text-blue-default font-bold inline-block px-4 py-2 rounded-xl">
+          <p className="mt-3 inline-block  rounded-xl bg-grey-light px-4 py-2 font-bold text-blue-default">
             {feedback.category}
           </p>
         </div>
       </Link>
       <p
-        className={`ml-auto font-bold flex ${
+        className={`ml-auto flex font-bold ${
           feedback.totalComments ? "" : "opacity-50"
         }`}
       >
         <span>
-          <i className="text-gray-400 mr-2 fa-regular fa-comment"></i>
+          <i className="fa-regular fa-comment mr-2 text-gray-400"></i>
         </span>
         {feedback.totalComments}
       </p>
     </div>
   );
 }
+
+export default Feedback;

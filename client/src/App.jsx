@@ -1,16 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import AppLayout from "./components/Layout/AppLayout";
-import { FeedbackAdd } from "./components/Feedbacks/FeedbackAdd";
+import AppLayout from "./ui/layout/AppLayout";
 
 import { FeedbacksProvider } from "./contexts/FeedbacksContext";
 import { NewFeedbackProvider } from "./contexts/NewFeedbackContext";
 import { CommentsProvider } from "./contexts/CommentsContext";
 
-import PageNotFound from "./pages/PageNotFound";
-import FeedbackDetails from "./pages/FeedbackDetails";
-import FeedbackEdit from "./pages/FeedbackEdit";
-import Roadmap from "./pages/Roadmap";
+import FeedbackAdd from "./features/feedback/FeedbackAdd";
+import FeedbackEdit from "./features/feedback/FeedbackEdit";
+import FeedbackDetails from "./features/feedback/FeedbackDetails";
+
+import PageNotFound from "./ui/PageNotFound";
+import Roadmap from "./ui/Roadmap";
 
 function App() {
   return (

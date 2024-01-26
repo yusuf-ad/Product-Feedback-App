@@ -1,5 +1,5 @@
 import { useNewFeedback } from "../../contexts/NewFeedbackContext";
-import Error from "../UI/Error";
+import Error from "../../ui/Error";
 
 function TextAreaField() {
   const {
@@ -19,7 +19,7 @@ function TextAreaField() {
 
   return (
     <div>
-      <label className="font-bold text-lg" htmlFor="detail">
+      <label className="text-lg font-bold" htmlFor="detail">
         Feedback Detail
       </label>
       <p className="text-gray-600 ">
@@ -29,9 +29,9 @@ function TextAreaField() {
         ref={detailsInput}
         value={details}
         onChange={handleChange}
-        className={`shadow-sm mt-5 bg-grey-light h-24 px-6 py-4 rounded-md w-full resize-none ${
+        className={`mt-5 h-24 w-full resize-none rounded-md bg-grey-light px-6 py-4 shadow-sm ${
           error
-            ? "outline-red-default/70 text-red-default"
+            ? "text-red-default outline-red-default/70"
             : "outline-purple-default/50"
         } `}
         name="feedback-detail"

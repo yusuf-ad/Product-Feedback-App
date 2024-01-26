@@ -3,7 +3,7 @@ import { FeedbackCategory } from "./FeedbackCategory";
 
 const categoryList = ["All", "UI", "UX", "Enhancement", "Feature", "Bug"];
 
-export function FeedbackCategories() {
+function FeedbackCategories() {
   const { activeFilter: active, setActiveFilter: setActive } = useFeedbacks();
 
   function handleClick(category) {
@@ -11,7 +11,7 @@ export function FeedbackCategories() {
   }
 
   return (
-    <div className=" rounded-xl p-6 bg-white shadow-sm">
+    <div className=" rounded-xl bg-white p-6 shadow-sm">
       <ul className="flex flex-wrap gap-4">
         {categoryList.map((category) => (
           <FeedbackCategory
@@ -25,3 +25,5 @@ export function FeedbackCategories() {
     </div>
   );
 }
+
+export default FeedbackCategories;

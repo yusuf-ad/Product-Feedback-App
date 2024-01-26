@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { faker } from "@faker-js/faker";
-import BASE_URL from "../../utils/BASE_URL";
-import { ReplyPost } from "./ReplyPost";
+import BASE_URL from "../utils/BASE_URL";
+import { ReplyPost } from "../features/reply/ReplyPost";
 
 const parseText = (text, color) => {
   const parts = text.split(" ");
@@ -55,7 +55,7 @@ export function User({ user, commentId, setReplies }) {
   return (
     <>
       <div className="flex items-center  gap-6 last:mb-8">
-        <div className="w-14 h-14 flex-shrink-0 self-start">
+        <div className="h-14 w-14 flex-shrink-0 self-start">
           <img className="rounded-full" src={user.userImg} alt="user" />
         </div>
         <div className="w-full">
@@ -66,13 +66,13 @@ export function User({ user, commentId, setReplies }) {
             </div>
             <button
               onClick={handleReply}
-              className="font-bold text-blue-default hover:underline duration-300"
+              className="font-bold text-blue-default duration-300 hover:underline"
             >
               Reply
             </button>
           </header>
-          <p className="text-grey-darkest mt-6">
-            <span className="text-purple-default font-bold "></span>
+          <p className="mt-6 text-grey-darkest">
+            <span className="font-bold text-purple-default "></span>
             {parseText(user.comment, "text-purple-default")}
           </p>
         </div>

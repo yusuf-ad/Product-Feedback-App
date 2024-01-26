@@ -1,5 +1,5 @@
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
-import { Feedback } from "./Feedback";
+import Feedback from "./Feedback";
 
 function FeedbacksList() {
   const { sortedFeedbacks: feedbacks } = useFeedbacks();

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useFeedbacks } from "../contexts/FeedbacksContext";
-import { FeatureCardList } from "../components/UI/FeatureCardList";
+import { FeatureCardList } from "../features/feature/FeatureCardList";
 
 function Roadmap() {
   const { progressFeedbacks, plannedFeedbacks, liveFeedbacks } = useFeedbacks();
@@ -9,32 +9,32 @@ function Roadmap() {
 
   return (
     <div className="container ">
-      <header className="px-8 py-6 bg-grey-darkest rounded-xl flex items-center gap-8  ">
+      <header className="flex items-center gap-8 rounded-xl bg-grey-darkest px-8 py-6  ">
         <div>
           <button
             onClick={() => navigate("/")}
-            className="text-white flex items-center group"
+            className="group flex items-center text-white"
           >
             <span>
-              <i className=" text-grey-75 text-sm mt-[6px] font-extrabold  mr-4 fa-solid fa-chevron-left"></i>
+              <i className=" fa-solid fa-chevron-left mr-4 mt-[6px]  text-sm font-extrabold text-grey-75"></i>
             </span>
-            <span className="mt-1 font-extrabold text-lg   transition duration-300 group-hover:underline">
+            <span className="mt-1 text-lg font-extrabold   transition duration-300 group-hover:underline">
               Go Back
             </span>
           </button>
 
-          <h1 className="font-extrabold text-white text-3xl mt-4">Roadmap</h1>
+          <h1 className="mt-4 text-3xl font-extrabold text-white">Roadmap</h1>
         </div>
 
         <Link to="/feedback/add" className="ml-auto">
           <button className="btn  bg-purple-default   hover:bg-purple-hover">
-            <i className="text-xs  fa-solid fa-plus"></i>
+            <i className="fa-solid  fa-plus text-xs"></i>
             <span className="ml-2">Add Feedback</span>
           </button>
         </Link>
       </header>
 
-      <main className="mt-14 md:flex md:space-y-0 md:p-0 space-y-8 p-8 gap-14">
+      <main className="mt-14 gap-14 space-y-8 p-8 md:flex md:space-y-0 md:p-0">
         {/* status-1 */}
         <div className="flex-1">
           <header>

@@ -1,4 +1,4 @@
-import DropdownButton from "../UI/DropdownButton";
+import DropdownButton from "../../ui/DropdownButton";
 
 function SelectionField({
   select = "Category",
@@ -9,7 +9,7 @@ function SelectionField({
 }) {
   return (
     <div>
-      <label className="font-bold text-lg" htmlFor="category">
+      <label className="text-lg font-bold" htmlFor="category">
         {select}
       </label>
       <p className="text-gray-600 ">{selectMsg}</p>
