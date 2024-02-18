@@ -6,7 +6,7 @@ const router = express.Router();
 router
   .route("/:id")
   .get(commentController.getAllComments)
-  .put(commentController.createComment)
+  .post(commentController.createComment)
   .delete(commentController.deleteAllComments);
 
 module.exports = router;

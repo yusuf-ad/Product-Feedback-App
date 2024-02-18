@@ -1,4 +1,4 @@
-const { Comment } = require("../models/commentModel");
+const Comment = require("../models/commentModel");
 const { Reply } = require("../models/replyModel");
 
 exports.createReply = async (req, res) => {

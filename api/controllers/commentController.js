@@ -1,5 +1,5 @@
 const Feedback = require("../models/feedbackModel");
-const { Comment } = require("../models/commentModel");
+const Comment = require("../models/commentModel");
 
 exports.createComment = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ exports.createComment = async (req, res) => {
 
     await Feedback.findByIdAndUpdate(
       req.params.id,
-      { $push: { comments: comment }, $inc: { totalComments: 1 } }, // $inc is used to increment totalComments by 1
+      { $push: { comments: comment._id }, $inc: { totalComments: 1 } }, // $inc is used to increment totalComments by 1
       { new: true } // Set new: true to return the updated feedback document
     );
 
@@ -27,14 +27,16 @@ exports.createComment = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err.message,
+      message: `${err.message} 😂`,
     });
   }
 };
 
 exports.getAllComments = async (req, res) => {
   try {
-    const feedback = await Feedback.findById(req.params.id);
+    const feedback = await Feedback.findById(req.params.id).populate(
+      "comments"
+    );
 
     res.status(200).json({
       status: "success",

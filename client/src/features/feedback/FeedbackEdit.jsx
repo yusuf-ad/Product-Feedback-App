@@ -4,13 +4,11 @@ import TextAreaField from "./TextAreaField";
 
 import { useEffect } from "react";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
-import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import { useNavigate, useParams } from "react-router-dom";
 
 import BASE_URL from "../../utils/BASE_URL";
 
 function FeedbackEdit() {
-  const { titleInput, detailsInput } = useNewFeedback();
   const {
     currentFeedback: feedback,
     handleGetFeedback,
@@ -19,7 +17,7 @@ function FeedbackEdit() {
     setFeedbacks,
   } = useFeedbacks();
 
-  const { details, title, category, status } = useNewFeedback();
+  const { title, category, details, status } = feedback;
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,10 +26,10 @@ function FeedbackEdit() {
     handleGetFeedback(id);
   }, [handleGetFeedback, id]);
 
-  useEffect(() => {
-    titleInput.current.value = `${feedback.title}`;
-    detailsInput.current.value = `${feedback.details}`;
-  });
+  // useEffect(() => {
+  //   titleInput.current.value = `${feedback.title}`;
+  //   detailsInput.current.value = `${feedback.details}`;
+  // });
 
   const handleUpdateFeedback = async function (id) {
     setIsLoading(true);
@@ -51,7 +49,7 @@ function FeedbackEdit() {
       console.log(data);
 
       const filteredFeedbacks = feedbacks.filter(
-        (item) => item._id !== data._id,
+        (item) => item._id !== data._id
       );
 
       setFeedbacks([...filteredFeedbacks, data]);
@@ -112,7 +110,7 @@ function FeedbackEdit() {
         </h1>
 
         <form onSubmit={handleSubmit} className="mt-16 flex flex-col gap-8">
-          <InputField />
+          <InputField currentTitle={title} />
 
           <SelectionField selected={feedback.category} />
 

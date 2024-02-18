@@ -36,7 +36,7 @@ function CommentsProvider({ children }) {
     setCommentsLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/comments/${id}`, {
-        method: "PUT",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fullName: faker.person.fullName(),

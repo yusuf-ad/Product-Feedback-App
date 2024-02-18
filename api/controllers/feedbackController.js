@@ -21,7 +21,9 @@ exports.getAllFeedbacks = async (req, res) => {
 
 exports.getFeedback = async (req, res) => {
   try {
-    const feedback = await Feedback.findById(req.params.id);
+    const feedback = await Feedback.findById(req.params.id).populate(
+      "comments"
+    );
 
     res.status(200).json({
       status: "success",
@@ -32,7 +34,7 @@ exports.getFeedback = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err,
+      message: err.message,
     });
   }
 };
@@ -45,7 +47,9 @@ exports.createFeedback = async (req, res) => {
 
     res.status(200).json({
       status: "success",
-      feedback,
+      data: {
+        feedback,
+      },
     });
   } catch (err) {
     res.status(404).json({

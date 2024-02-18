@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { commentSchema } = require("./commentModel");
 
 const { Schema } = mongoose;
 
@@ -16,6 +15,7 @@ const feedbackSchema = new Schema(
     details: {
       type: String,
       default: "Feature",
+      required: true,
     },
     status: {
       type: String,
@@ -33,7 +33,12 @@ const feedbackSchema = new Schema(
       type: Number,
       default: 0,
     },
-    comments: [commentSchema], // Defining the comments field as an array of commentSchema objects
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ], // Defining the comments field as an array of commentSchema objects
   },
   { timestamps: true }
 );

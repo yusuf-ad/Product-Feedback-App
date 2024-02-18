@@ -1,7 +1,7 @@
 import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import Error from "../../ui/Error";
 
-function InputField() {
+function InputField({ currentTitle }) {
   const { titleInput, title, dispatch, titleError: error } = useNewFeedback();
 
   function handleChange(e) {
@@ -20,6 +20,7 @@ function InputField() {
       <p className="text-gray-600 ">Add a short, descriptive headline</p>
       <input
         ref={titleInput}
+        defaultValue={currentTitle}
         value={title}
         onChange={handleChange}
         className={`mt-5 h-14 w-full rounded-md bg-grey-light px-6 shadow-sm ${

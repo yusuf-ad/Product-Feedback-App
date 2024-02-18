@@ -14,6 +14,9 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "deneme":
+      return this;
+
     case "changeTitle":
       return { ...state, title: action.payload };
 
@@ -70,7 +73,7 @@ function NewFeedbackProvider({ children }) {
       category,
     };
 
-    await handleAddFeedback(newFeedback);
+    handleAddFeedback(newFeedback);
 
     dispatch({ type: "reset" });
 

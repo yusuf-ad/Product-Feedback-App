@@ -18,6 +18,7 @@ const commentSchema = new Schema({
   },
   userImg: {
     type: String,
+    default: "https://mighty.tools/mockmind-api/content/human/65.jpg",
   },
   replies: [replySchema],
 });
@@ -31,6 +32,6 @@ commentSchema.pre("save", function (next) {
   next();
 });
 
-const Comment = mongoose.model("comments", commentSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-module.exports = { commentSchema, Comment };
+module.exports = Comment;
