@@ -13,6 +13,7 @@
     "faker": "^6.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.18.0",
     "tailwindcss-gradients": "^3.0.0"
   },
