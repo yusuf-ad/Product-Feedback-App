@@ -1,11 +1,7 @@
-import { useForm, FormProvider } from "react-hook-form";
-
 import PlusIcon from "../../ui/PlusIcon";
 import CreateFeedbackForm from "./CreateFeedbackForm";
 
 function FeedbackAdd() {
-  const methods = useForm();
-
   return (
     <div className="container max-w-2xl p-8 md:p-0">
       <button className="group flex items-center">
@@ -20,9 +16,7 @@ function FeedbackAdd() {
       <div className="relative mt-20 rounded-xl bg-white px-8 py-16 shadow-sm">
         <h1 className="text-3xl">Create New Feedback</h1>
 
-        <FormProvider {...methods}>
-          <CreateFeedbackForm />
-        </FormProvider>
+        <CreateFeedbackForm />
 
         <PlusIcon />
       </div>

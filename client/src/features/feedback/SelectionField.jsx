@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"];
 
-function SelectionField({ name, register, setValue }) {
+function SelectionField({ name, setValue, register }) {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [active, setActive] = useState(menuItems[0]);
 
@@ -57,8 +57,7 @@ function SelectionField({ name, register, setValue }) {
           </span>
         </p>
       </button>
-      {/* to get data from the form */}
-      <input type="hidden" name="category" value={active} {...register(name)} />
+      <input type="hidden" defaultValue={active} {...register(name)} />
       <div
         ref={menu}
         className={`${isMenuActive && "active"} pointer-events-none absolute top-2 z-20 w-full  translate-y-0 rounded-xl bg-white opacity-0 shadow-lg duration-300`}

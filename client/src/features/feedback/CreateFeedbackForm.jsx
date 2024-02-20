@@ -6,22 +6,36 @@ import SelectionField from "./SelectionField";
 import TextAreaField from "./TextAreaField";
 
 function CreateFeedbackForm() {
-  const { handleSubmit, formState, register, setValue } = useForm();
+  const { handleSubmit, formState, register, setValue, getValues } = useForm();
 
-  function onSubmit(data) {
-    console.log("data -> ", data);
+  const { errors } = formState;
+
+  function onSubmit(data) {}
+
+  function onError(errors) {
+    console.log(errors);
   }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className="mt-12 flex flex-col gap-8"
     >
       <FormRow
         label={"Feedback Title"}
         message={"Add a short, descriptive headline"}
+        error={errors?.title?.message}
       >
-        <InputField name={"title"} type={"text"} register={register} />
+        <InputField
+          name={"title"}
+          type={"text"}
+          options={{
+            required: "Can't be empty",
+            validate: (value) => value.trim() !== "" || "Can't be empty",
+          }}
+          register={register}
+          error={errors?.title?.message}
+        />
       </FormRow>
 
       <FormRow
@@ -30,8 +44,8 @@ function CreateFeedbackForm() {
       >
         <SelectionField
           name={"category"}
-          register={register}
           setValue={setValue}
+          register={register}
         />
       </FormRow>
 
@@ -40,8 +54,17 @@ function CreateFeedbackForm() {
         message={
           "Include any specific comments on what should be improved, added, etc."
         }
+        error={errors?.details?.message}
       >
-        <TextAreaField name={"details"} register={register} />
+        <TextAreaField
+          name={"details"}
+          register={register}
+          options={{
+            required: "Can't be empty",
+            validate: (value) => value.trim() !== "" || "Can't be empty",
+          }}
+          error={errors?.details?.message}
+        />
       </FormRow>
 
       <div className="mt-12 flex justify-end gap-4">

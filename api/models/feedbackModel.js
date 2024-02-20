@@ -10,11 +10,11 @@ const feedbackSchema = new Schema(
     },
     category: {
       type: String,
+      default: "Feature",
       required: true,
     },
     details: {
       type: String,
-      default: "Feature",
       required: true,
     },
     status: {

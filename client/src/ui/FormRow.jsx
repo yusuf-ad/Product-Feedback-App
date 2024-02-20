@@ -1,4 +1,4 @@
-function FormRow({ label, message, children }) {
+function FormRow({ label, message, children, error }) {
   return (
     <div>
       {label && (
@@ -8,6 +8,7 @@ function FormRow({ label, message, children }) {
       )}
       {message && <p className="text-gray-600 ">{message}</p>}
       {children}
+      {error && <p className="text-red-500 mt-3">{error}</p>}
     </div>
   );
 }
