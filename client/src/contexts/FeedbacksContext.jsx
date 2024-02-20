@@ -145,6 +145,45 @@ function FeedbacksProvider({ children }) {
     }
   }, []);
 
+  const handleUpdateFeedback = async function (id, newFeedback) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newFeedback),
+      });
+      const { data } = await res.json();
+
+      console.log(data);
+
+      const filteredFeedbacks = feedbacks.filter(
+        (item) => item._id !== data._id
+      );
+
+      setFeedbacks([...filteredFeedbacks, data]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  async function handleDeleteFeedback(id) {
+    setIsLoading(true);
+    try {
+      await fetch(`${BASE_URL}/feedbacks/${id}`, {
+        method: "DELETE",
+      });
+
+      setFeedbacks((feedbacks) => feedbacks.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const upvoteFeedback = async function (id) {
     try {
       const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
@@ -187,6 +226,8 @@ function FeedbacksProvider({ children }) {
         setFeedbacks,
         handleAddFeedback,
         handleGetFeedback,
+        handleUpdateFeedback,
+        handleDeleteFeedback,
         upvoteFeedback,
         isLoading,
         setIsLoading,

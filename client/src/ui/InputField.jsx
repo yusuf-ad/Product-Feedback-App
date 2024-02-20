@@ -1,4 +1,4 @@
-function InputField({ name, type, options, register, error }) {
+function InputField({ name, type, options = {}, register, error }) {
   return (
     <input
       className={`mt-5 h-14 w-full rounded-md bg-grey-light px-6 shadow-sm ${
@@ -8,7 +8,7 @@ function InputField({ name, type, options, register, error }) {
       }`}
       id={name}
       type={type}
-      {...register(name, options)}
+      {...register?.(name, options)}
     />
   );
 }

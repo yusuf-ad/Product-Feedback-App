@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import FormRow from "../../ui/FormRow";
-import InputField from "./InputField";
-import SelectionField from "./SelectionField";
-import TextAreaField from "./TextAreaField";
+import InputField from "../../ui/InputField";
+import SelectionField from "../../ui/SelectionField";
+import TextAreaField from "../../ui/TextAreaField";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import LoadingSpinner from "../../ui/LoadingSpinner/LoadingSpinner";
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import DropdownMenu from "../../ui/DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 
 function SelectionField({ menuItems, name, setValue, active }) {
   const [isMenuActive, setIsMenuActive] = useState(false);

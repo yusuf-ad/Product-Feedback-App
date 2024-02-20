@@ -1,3 +1,5 @@
+import Error from "./Error";
+
 function FormRow({ label, message, children, error }) {
   return (
     <div>
@@ -8,7 +10,11 @@ function FormRow({ label, message, children, error }) {
       )}
       {message && <p className="text-gray-600 ">{message}</p>}
       {children}
-      {error && <p className="text-red-500 mt-3">{error}</p>}
+      {error && (
+        <div className="mt-3">
+          <Error message={error} />
+        </div>
+      )}
     </div>
   );
 }
