@@ -1,10 +1,12 @@
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import FormRow from "../../ui/FormRow";
 import InputField from "./InputField";
 import SelectionField from "./SelectionField";
 import TextAreaField from "./TextAreaField";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import LoadingSpinner from "../../ui/LoadingSpinner/LoadingSpinner";
 
 const errorOptions = {
   required: "Can't be empty",
@@ -12,31 +14,27 @@ const errorOptions = {
 };
 
 function CreateFeedbackForm() {
-  const { handleAddFeedback } = useFeedbacks();
+  const { handleAddFeedback, isLoading } = useFeedbacks();
+  const navigate = useNavigate();
 
-  const {
-    handleSubmit,
-    formState,
-    register,
-    setValue,
-    getValues,
-    reset,
-    watch,
-  } = useForm();
+  const { handleSubmit, formState, register, setValue, reset, watch } =
+    useForm();
 
   const { errors } = formState;
 
-  function onSubmit(data) {
-    handleAddFeedback(data);
+  async function onSubmit(data) {
+    await handleAddFeedback(data);
 
     reset();
-
     setValue("category", "");
+    navigate("/");
   }
 
   function onError(errors) {
     console.log(errors);
   }
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <form
@@ -88,7 +86,7 @@ function CreateFeedbackForm() {
 
       <div className="mt-12 flex justify-end gap-4">
         <button
-          onClick={reset}
+          onClick={() => navigate("/")}
           type="reset"
           className="btn bg-grey-darkest hover:bg-grey-darker-hover"
         >

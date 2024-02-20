@@ -53,21 +53,20 @@ function SelectionField({ menuItems, name, setValue, active }) {
         </p>
       </button>
 
-      {isMenuActive && (
-        <DropdownMenu
-          ref={menu}
-          items={menuItems}
-          render={(item) => (
-            <DropdownItem
-              key={item}
-              isActive={item === active}
-              updateActive={updateActive}
-            >
-              {item}
-            </DropdownItem>
-          )}
-        />
-      )}
+      <DropdownMenu
+        isMenuActive={isMenuActive}
+        ref={menu}
+        items={menuItems}
+        render={(item) => (
+          <DropdownItem
+            key={item}
+            isActive={item === active}
+            updateActive={updateActive}
+          >
+            {item}
+          </DropdownItem>
+        )}
+      />
     </div>
   );
 }

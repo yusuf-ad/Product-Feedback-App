@@ -1,6 +1,6 @@
 import "./LoadingSpinner.css";
 
-export default function LoadingSpinner() {
+function LoadingSpinner() {
   return (
     <main className="page-center">
       <div className="lds-ring">
@@ -12,3 +12,5 @@ export default function LoadingSpinner() {
     </main>
   );
 }
+
+export default LoadingSpinner;

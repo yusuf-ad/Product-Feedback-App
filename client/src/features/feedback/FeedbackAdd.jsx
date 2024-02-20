@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import PlusIcon from "../../ui/PlusIcon";
 import CreateFeedbackForm from "./CreateFeedbackForm";
 
 function FeedbackAdd() {
+  const navigate = useNavigate();
+
   return (
     <div className="container max-w-2xl p-8 md:p-0">
-      <button className="group flex items-center">
+      <button onClick={() => navigate("/")} className="group flex items-center">
         <span>
           <i className="fa-solid  fa-chevron-left mr-4 text-xs text-blue-default"></i>
         </span>
