@@ -121,9 +121,7 @@ function FeedbacksProvider({ children }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(feedback),
       });
-      const data = await res.json();
-
-      console.log(data);
+      const { data } = await res.json();
 
       setFeedbacks((feedbacks) => [...feedbacks, data.feedback]);
     } catch (err) {

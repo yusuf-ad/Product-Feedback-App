@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-const menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"];
+import DropdownMenu from "../../ui/DropdownMenu";
 
-function SelectionField({ name, setValue, register }) {
+function SelectionField({ menuItems, name, setValue, active }) {
   const [isMenuActive, setIsMenuActive] = useState(false);
-  const [active, setActive] = useState(menuItems[0]);
 
   const menu = useRef(null);
   const dropdownButton = useRef(null);
@@ -14,8 +13,6 @@ function SelectionField({ name, setValue, register }) {
   }
 
   function updateActive(newActive) {
-    setActive(newActive);
-
     setValue(name, newActive);
 
     toggleMenu();
@@ -24,6 +21,7 @@ function SelectionField({ name, setValue, register }) {
   useEffect(() => {
     function handleClickOutside(e) {
       if (
+        menu.current &&
         !menu.current.contains(e.target) &&
         !dropdownButton.current.contains(e.target)
       ) {
@@ -35,18 +33,15 @@ function SelectionField({ name, setValue, register }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, [isMenuActive]);
 
   return (
     <div className="relative flex items-center">
       <button
+        type="button"
         ref={dropdownButton}
-        onClick={(e) => {
-          e.preventDefault();
-
-          toggleMenu();
-        }}
-        className=" mt-5 h-14 w-full rounded-md border-2 border-transparent bg-grey-light px-6 shadow-sm transition-colors duration-100 hover:border-purple-default/50"
+        onClick={toggleMenu}
+        className="mt-5 h-14 w-full rounded-md border-2 border-transparent bg-grey-light px-6 shadow-sm transition-colors duration-100 hover:border-purple-default/50"
       >
         <p className="flex justify-between">
           <span className="mr-2 text-lg text-gray-700">{active} </span>
@@ -57,13 +52,12 @@ function SelectionField({ name, setValue, register }) {
           </span>
         </p>
       </button>
-      <input type="hidden" defaultValue={active} {...register(name)} />
-      <div
-        ref={menu}
-        className={`${isMenuActive && "active"} pointer-events-none absolute top-2 z-20 w-full  translate-y-0 rounded-xl bg-white opacity-0 shadow-lg duration-300`}
-      >
-        <ul>
-          {menuItems.map((item) => (
+
+      {isMenuActive && (
+        <DropdownMenu
+          ref={menu}
+          items={menuItems}
+          render={(item) => (
             <DropdownItem
               key={item}
               isActive={item === active}
@@ -71,9 +65,9 @@ function SelectionField({ name, setValue, register }) {
             >
               {item}
             </DropdownItem>
-          ))}
-        </ul>
-      </div>
+          )}
+        />
+      )}
     </div>
   );
 }

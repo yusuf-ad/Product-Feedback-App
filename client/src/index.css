@@ -31,7 +31,7 @@
 
   .sortItem,
   .dropItem {
-    @apply flex justify-between px-6 py-3 border-b transition duration-300 cursor-pointer border-b-slate-300 hover:text-purple-hover last:border-0;
+    @apply flex justify-between px-6 py-3 border-b transition duration-300 cursor-pointer border-b-slate-300 hover:text-purple-hover last:border-0 min-h-fit;
   }
 
   .btn {
