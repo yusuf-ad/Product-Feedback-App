@@ -126,3 +126,20 @@ exports.deleteFeedback = async (req, res) => {
     });
   }
 };
+
+exports.deleteAllFeedback = async (req, res) => {
+  try {
+    await Feedback.deleteMany();
+
+    // ! 204 means no content
+    res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};

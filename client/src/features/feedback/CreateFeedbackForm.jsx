@@ -46,13 +46,15 @@ function CreateFeedbackForm() {
         message={"Add a short, descriptive headline"}
         error={errors?.title?.message}
       >
-        <InputField
-          name={"title"}
-          type={"text"}
-          options={errorOptions}
-          register={register}
-          error={errors?.title?.message}
-        />
+        <div className="mt-5 h-14">
+          <InputField
+            name={"title"}
+            type={"text"}
+            options={errorOptions}
+            register={register}
+            error={errors?.title?.message}
+          />
+        </div>
       </FormRow>
 
       <FormRow
@@ -76,12 +78,14 @@ function CreateFeedbackForm() {
         }
         error={errors?.details?.message}
       >
-        <TextAreaField
-          name={"details"}
-          register={register}
-          options={errorOptions}
-          error={errors?.details?.message}
-        />
+        <div className="h-32 mt-5">
+          <TextAreaField
+            name={"details"}
+            register={register}
+            options={errorOptions}
+            error={errors?.details?.message}
+          />
+        </div>
       </FormRow>
 
       <div className="mt-12 flex justify-end gap-4">

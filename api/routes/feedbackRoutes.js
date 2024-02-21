@@ -6,7 +6,8 @@ const router = express.Router();
 router
   .route("/")
   .get(feedbackController.getAllFeedbacks)
-  .post(feedbackController.createFeedback);
+  .post(feedbackController.createFeedback)
+  .delete(feedbackController.deleteAllFeedback);
 
 router
   .route("/:id")
