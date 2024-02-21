@@ -1,33 +1,25 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useComments } from "../../contexts/CommentsContext";
 import { Link } from "react-router-dom";
 
 import Feedback from "./Feedback";
 import Comment from "../comment/Comment";
 import LoadingSpinner from "../../ui/LoadingSpinner/LoadingSpinner";
-import FormRow from "../../ui/FormRow";
-import TextAreaField from "../../ui/TextAreaField";
+import { CreateComment } from "../comment/CreateComment";
 
 function FeedbackDetails() {
   const navigate = useNavigate();
   const { id: feedbackId } = useParams();
-  const { isLoading, currentFeedback, handleGetFeedback } = useFeedbacks();
-
-  const { createComment, commentsLoading, getComments, comments } =
-    useComments();
+  const { currentFeedback, handleGetFeedback } = useFeedbacks();
 
   useEffect(() => {
     handleGetFeedback(feedbackId);
-    getComments(feedbackId);
-  }, [feedbackId, handleGetFeedback, getComments]);
-
-  if (isLoading) return <LoadingSpinner />;
+  }, [feedbackId, handleGetFeedback]);
 
   return (
-    <div className="container max-w-4xl p-12 md:p-0 ">
+    <div className="container max-w-4xl p-10 md:p-8 lg:p-0">
       <header className="flex justify-between">
         <button
           onClick={() => navigate("/")}
@@ -50,17 +42,10 @@ function FeedbackDetails() {
 
       <Feedback feedback={currentFeedback} />
 
-      <section>
-        <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
-          <h2 className="text-xl">{comments.length} Comments</h2>
-
-          {comments.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
-          ))}
-        </div>
-
-        {/* {!commentsLoading && <LoadingSpinner />} */}
-      </section>
+      <CommentList
+        feedbackId={feedbackId}
+        render={(comment) => <Comment key={comment._id} comment={comment} />}
+      />
 
       <CreateComment feedbackId={feedbackId} />
     </div>
@@ -69,35 +54,26 @@ function FeedbackDetails() {
 
 export default FeedbackDetails;
 
-function CreateComment({ feedbackId }) {
-  const { handleSubmit, register, watch } = useForm();
-  const { createComment, commentsLoading } = useComments();
+function CommentList({ feedbackId, render }) {
+  const { comments, getComments, commentsLoading } = useComments();
 
-  function onSubmit(data) {
-    const { newComment } = data;
-
-    createComment(feedbackId, newComment);
-  }
+  useEffect(() => {
+    getComments(feedbackId);
+  }, [feedbackId, getComments]);
 
   return (
-    <section className="mt-8 rounded-xl bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-xl">Add Comment</h2>
+    <section>
+      <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
+        <h2 className="text-xl">{comments.length} Comments</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow>
-          <div className="h-36 mt-6 mb-12">
-            <TextAreaField name={"newComment"} register={register} />
+        {comments.map(render)}
+
+        {commentsLoading && (
+          <div className="flex items-center justify-center min-h-[10rem]">
+            <LoadingSpinner type={"medium"} />
           </div>
-        </FormRow>
-
-        <div className="mt-10 flex items-center justify-between">
-          <p>{255 - watch("newComment")?.trim().length} characters left</p>
-
-          <button className="btn bg-purple-default hover:bg-purple-hover">
-            Post Comment
-          </button>
-        </div>
-      </form>
+        )}
+      </div>
     </section>
   );
 }

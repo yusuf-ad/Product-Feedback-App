@@ -46,4 +46,20 @@
     opacity: 1;
     transition: all 0.3s;
   }
+
+  .center-x {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .center-y {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .center-xy {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

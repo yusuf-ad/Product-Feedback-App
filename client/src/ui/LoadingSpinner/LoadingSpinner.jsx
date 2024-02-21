@@ -1,15 +1,13 @@
 import "./LoadingSpinner.css";
 
-function LoadingSpinner() {
+function LoadingSpinner({ type }) {
   return (
-    <main className="page-center">
-      <div className="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </main>
+    <div className={`lds-ring ${type}`}>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   );
 }
 

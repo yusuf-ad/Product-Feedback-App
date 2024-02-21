@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import LoadingSpinner from "../../ui/LoadingSpinner/LoadingSpinner";
 
 function Feedback({ feedback }) {
-  const { upvoteFeedback } = useFeedbacks();
+  const { upvoteFeedback, isLoading } = useFeedbacks();
+
+  if (isLoading)
+    return (
+      <div className="bg-white flex items-center justify-center min-h-[10rem] rounded-xl mt-8">
+        <LoadingSpinner type={"medium"} />
+      </div>
+    );
 
   return (
     <div className="mt-8 flex items-center gap-8 rounded-xl bg-white p-6 shadow-sm ">

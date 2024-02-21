@@ -11,7 +11,7 @@ function FeedbackEdit() {
   }
 
   return (
-    <div className="container max-w-2xl  p-12 md:p-0">
+    <div className="container max-w-2xl p-10 md:p-8 lg:p-0">
       <button onClick={handleReturnBack} className="group flex items-center">
         <span>
           <i className="fa-solid  fa-chevron-left mr-4 text-xs text-blue-default"></i>

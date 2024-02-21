@@ -1,21 +1,23 @@
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
+
 import RoadmapSidebar from "../RoadmapSidebar";
 import FeedbackBoard from "../FeedbackBoard";
 import SuggestionsHeader from "../layout/SuggestionsHeader";
 import FeedbackCategories from "../../features/feedback/FeedbackCategories";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import NoFeedback from "../NoFeedback";
 import FeedbacksList from "../../features/feedback/FeedbacksList";
-
+import NoContent from "../NoContent";
 import Aside from "./Aside";
 import Main from "./Main";
 import Section from "./Section";
-import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
 function AppLayout() {
-  const { sortedFeedbacks, isLoading } = useFeedbacks();
+  const { sortedFeedbacks, isLoading, feedbacks } = useFeedbacks();
+
+  console.log(feedbacks);
 
   return (
-    <div className="container grid grid-cols-4 gap-12 p-8 md:p-0">
+    <div className="container grid grid-cols-4 gap-12 p-10 md:p-8 lg:p-0 ">
       <Aside>
         <FeedbackBoard />
         <FeedbackCategories />
@@ -24,9 +26,15 @@ function AppLayout() {
       <Main>
         <SuggestionsHeader numFeedbacks={sortedFeedbacks.length} />
         <Section>
-          {isLoading ? <LoadingSpinner /> : <FeedbacksList />}
+          {isLoading ? (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <FeedbacksList />
+          )}
 
-          {!sortedFeedbacks.length && !isLoading && <NoFeedback />}
+          {!sortedFeedbacks.length && !isLoading && <NoContent />}
         </Section>
       </Main>
     </div>

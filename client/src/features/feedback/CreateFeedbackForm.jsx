@@ -34,7 +34,12 @@ function CreateFeedbackForm() {
     console.log(errors);
   }
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] w-full ">
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <form
