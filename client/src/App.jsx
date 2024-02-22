@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./ui/layout/AppLayout";
 
 import { FeedbacksProvider } from "./contexts/FeedbacksContext";
-import { NewFeedbackProvider } from "./contexts/NewFeedbackContext";
 import { CommentsProvider } from "./contexts/CommentsContext";
+import { RepliesProvider } from "./contexts/RepliesContext";
 
 import FeedbackAdd from "./features/feedback/FeedbackAdd";
 import FeedbackEdit from "./features/feedback/FeedbackEdit";
@@ -16,8 +16,8 @@ import Roadmap from "./ui/Roadmap";
 function App() {
   return (
     <FeedbacksProvider>
-      <NewFeedbackProvider>
-        <CommentsProvider>
+      <CommentsProvider>
+        <RepliesProvider>
           <BrowserRouter>
             <Routes>
               <Route index element={<AppLayout />} />
@@ -31,8 +31,8 @@ function App() {
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>
-        </CommentsProvider>
-      </NewFeedbackProvider>
+        </RepliesProvider>
+      </CommentsProvider>
     </FeedbacksProvider>
   );
 }

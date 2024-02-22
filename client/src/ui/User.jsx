@@ -1,52 +1,11 @@
 import { useState } from "react";
-import { faker } from "@faker-js/faker";
-import BASE_URL from "../utils/BASE_URL";
+
+import ParsedText from "./ParsedText";
 import { ReplyPost } from "../features/reply/ReplyPost";
 
-const parseText = (text, color) => {
-  const parts = text.split(" ");
-  return parts.map((part, index) => {
-    if (part.startsWith("@")) {
-      return (
-        <span key={index} className={`${color} font-bold`}>
-          {" "}
-          {part}
-        </span>
-      );
-    }
-    return (
-      <span key={index} style={{ color: "black" }}>
-        {" "}
-        {part}
-      </span>
-    );
-  });
-};
-
-export function User({ user, commentId, setReplies }) {
+export function User({ user, commentId }) {
   const [reply, setReply] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
-  async function createReply() {
-    try {
-      const res = await fetch(`${BASE_URL}/replies/${commentId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: faker.person.fullName(),
-          username: undefined,
-          comment: reply,
-          userImg: faker.image.avatar(),
-        }),
-      });
-      const { data } = await res.json();
-
-      setReplies((replies) => [...replies, data.reply]);
-      setIsOpen(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   function handleReply() {
     setIsOpen(!isOpen);
@@ -73,7 +32,7 @@ export function User({ user, commentId, setReplies }) {
           </header>
           <p className="mt-6 text-grey-darkest">
             <span className="font-bold text-purple-default "></span>
-            {parseText(user.comment, "text-purple-default")}
+            {ParsedText(user.comment, "text-purple-default")}
           </p>
         </div>
       </div>
@@ -83,7 +42,6 @@ export function User({ user, commentId, setReplies }) {
           username={user.username}
           reply={reply}
           setReply={setReply}
-          createReply={createReply}
           setIsOpen={setIsOpen}
         />
       )}

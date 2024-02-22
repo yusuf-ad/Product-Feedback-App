@@ -12,9 +12,7 @@ import Main from "./Main";
 import Section from "./Section";
 
 function AppLayout() {
-  const { sortedFeedbacks, isLoading, feedbacks } = useFeedbacks();
-
-  console.log(feedbacks);
+  const { sortedFeedbacks, isLoading } = useFeedbacks();
 
   return (
     <div className="container grid grid-cols-4 gap-12 p-10 md:p-8 lg:p-0 ">

@@ -42,10 +42,7 @@ function FeedbackDetails() {
 
       <Feedback feedback={currentFeedback} />
 
-      <CommentList
-        feedbackId={feedbackId}
-        render={(comment) => <Comment key={comment._id} comment={comment} />}
-      />
+      <CommentList feedbackId={feedbackId} />
 
       <CreateComment feedbackId={feedbackId} />
     </div>
@@ -54,7 +51,7 @@ function FeedbackDetails() {
 
 export default FeedbackDetails;
 
-function CommentList({ feedbackId, render }) {
+function CommentList({ feedbackId }) {
   const { comments, getComments, commentsLoading } = useComments();
 
   useEffect(() => {
@@ -66,7 +63,9 @@ function CommentList({ feedbackId, render }) {
       <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
         <h2 className="text-xl">{comments.length} Comments</h2>
 
-        {comments.map(render)}
+        {comments.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
+        ))}
 
         {commentsLoading && (
           <div className="flex items-center justify-center min-h-[10rem]">

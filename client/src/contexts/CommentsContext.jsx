@@ -58,9 +58,9 @@ function CommentsProvider({ children }) {
   return (
     <CommentsContext.Provider
       value={{
-        getComments,
         comments,
         commentsLoading,
+        getComments,
         createComment,
       }}
     >

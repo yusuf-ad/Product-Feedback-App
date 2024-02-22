@@ -104,3 +104,5 @@ Their main focus should be:
 
 1. displaying/updating UI.
 2. responding to users' interactions.
+
+pageleri iyi ayır
