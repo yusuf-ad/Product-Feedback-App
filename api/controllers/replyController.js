@@ -1,6 +1,24 @@
 const Comment = require("../models/commentModel");
 const { Reply } = require("../models/replyModel");
 
+exports.getAllReplies = async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.id);
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        replies: comment.replies,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "not found",
+      message: err.message,
+    });
+  }
+};
+
 exports.createReply = async (req, res) => {
   try {
     const newReply = {
@@ -33,24 +51,6 @@ exports.createReply = async (req, res) => {
     res.status(404).json({
       status: "failed to create reply",
       error: err.message,
-    });
-  }
-};
-
-exports.getAllReplies = async (req, res) => {
-  try {
-    const comment = await Comment.findById(req.params.id);
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        replies: comment.replies,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "not found",
-      message: err.message,
     });
   }
 };

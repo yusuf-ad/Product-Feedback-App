@@ -1,14 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useReplies } from "../../contexts/RepliesContext";
 
 import Error from "../../ui/Error";
 import TextAreaField from "../../ui/TextAreaField";
-import { useForm } from "react-hook-form";
 
-export function ReplyPost({ createReply, username }) {
-  const { handleSubmit, register, watch, reset } = useForm();
+const errorOptions = {
+  required: "Can't be empty",
+  validate: (value) => value.trim() !== "" || "Can't be empty",
+};
 
-  function onSubmit(data) {
-    console.log(data);
+export function ReplyPost({ commentId, username, setIsOpen, setReplies }) {
+  const { handleSubmit, register, formState } = useForm();
+  const { createReply, isLoading } = useReplies();
+
+  const { errors } = formState;
+
+  async function onSubmit(data) {
+    const { newReply } = data;
+
+    const reply = await createReply(commentId, newReply);
+
+    setReplies((replies) => [...replies, reply]);
+
+    setIsOpen(false);
   }
 
   return (
@@ -17,57 +31,21 @@ export function ReplyPost({ createReply, username }) {
       className="mb-6 mt-2 flex w-[calc(100%-76px)] items-start gap-8 self-end"
     >
       <div className="w-full h-28">
-        <TextAreaField name={"newReply"} register={register} />
+        <TextAreaField
+          name={"newReply"}
+          register={register}
+          options={errorOptions}
+          error={errors?.newReply?.message}
+        />
+        {errors?.newReply?.message && <Error>{errors.newReply.message}</Error>}
       </div>
 
-      <button className="btn ml-auto bg-purple-default hover:bg-purple-hover">
+      <button
+        disabled={isLoading}
+        className="btn ml-auto bg-purple-default hover:bg-purple-hover disabled:bg-purple-default/50  disabled:cursor-progress"
+      >
         Post Reply
       </button>
     </form>
   );
 }
-
-// <>
-//       <div className="mb-6 mt-2 flex w-[calc(100%-76px)] items-start gap-8 self-end">
-//         <textarea
-//           ref={textArea}
-//           value={reply}
-//           onChange={(e) => {
-//             if (!e.target.value.trim()) setErrorMsg("");
-
-//             setReply(e.target.value);
-//             setErrorMsg("");
-//           }}
-//           className={`h-32  w-full resize-none rounded-md bg-grey-light px-6 py-4 shadow-sm ${
-//             errorMsg
-//               ? "text-red-default outline-red-default/70"
-//               : "outline-purple-default/50"
-//           }`}
-//           name="feedback-detail"
-//           id="detail"
-//           maxLength={255}
-//         ></textarea>
-//         <button
-//           onClick={() => {
-//             if (!reply.trim()) {
-//               textArea.current.focus();
-//               return setErrorMsg("Can't be empty.");
-//             }
-
-//             setReply((reply) => `${username} ${reply}`);
-
-//             setErrorMsg("");
-//             createReply();
-//             setReply("");
-//           }}
-//           className="btn ml-auto bg-purple-default hover:bg-purple-hover"
-//         >
-//           Post Reply
-//         </button>
-//       </div>
-//       {errorMsg && (
-//         <div className="-mt-8 ml-20">
-//           <Error message={errorMsg} />
-//         </div>
-//       )}
-//     </>

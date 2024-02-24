@@ -13,13 +13,12 @@ const CommentsContext = createContext({
 
 function CommentsProvider({ children }) {
   const [comments, setComments] = useState([]);
-
   const [commentsLoading, setCommentsLoading] = useState(true);
 
-  const getComments = useCallback(async function (id) {
+  const getComments = useCallback(async function (feedbackId) {
     setCommentsLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/comments/${id}`);
+      const res = await fetch(`${BASE_URL}/comments/${feedbackId}`);
       const { data } = await res.json();
 
       setComments(data.comments);
@@ -31,8 +30,6 @@ function CommentsProvider({ children }) {
   }, []);
 
   async function createComment(id, newComment) {
-    console.log(newComment);
-
     setCommentsLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/comments/${id}`, {

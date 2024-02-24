@@ -1,26 +1,33 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import BASE_URL from "../utils/BASE_URL";
 import { faker } from "@faker-js/faker";
 
-const ReplyContext = createContext();
-
 const initialState = {
-  replies: [],
-  createReply: () => {},
+  getReplies: [],
+  createReply: {},
 };
 
+const ReplyContext = createContext(initialState);
+
 function RepliesProvider({ children }) {
-  const [replies, setReplies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function getReplies(commentId) {
-    const res = await fetch(`${BASE_URL}/replies/${commentId}`);
-    const { data } = await res.json();
+  const getReplies = useCallback(async function (commentId) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/replies/${commentId}`);
+      const { data } = await res.json();
 
-    setReplies(data.replies);
-  }
+      return data.replies;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   async function createReply(commentId, newReply) {
+    setIsLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/replies/${commentId}`, {
         method: "POST",
@@ -32,16 +39,19 @@ function RepliesProvider({ children }) {
           userImg: faker.image.avatar(),
         }),
       });
+
       const { data } = await res.json();
 
-      setReplies((replies) => [...replies, data.reply]);
+      return data.reply;
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
-    <ReplyContext.Provider value={{ replies, getReplies, createReply }}>
+    <ReplyContext.Provider value={{ getReplies, createReply, isLoading }}>
       {children}
     </ReplyContext.Provider>
   );

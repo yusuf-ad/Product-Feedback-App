@@ -1,13 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import { useEffect } from "react";
-import { useComments } from "../../contexts/CommentsContext";
 import { Link } from "react-router-dom";
 
 import Feedback from "./Feedback";
-import Comment from "../comment/Comment";
-import LoadingSpinner from "../../ui/LoadingSpinner/LoadingSpinner";
 import { CreateComment } from "../comment/CreateComment";
+import { CommentList } from "../comment/CommentList";
 
 function FeedbackDetails() {
   const navigate = useNavigate();
@@ -50,29 +48,3 @@ function FeedbackDetails() {
 }
 
 export default FeedbackDetails;
-
-function CommentList({ feedbackId }) {
-  const { comments, getComments, commentsLoading } = useComments();
-
-  useEffect(() => {
-    getComments(feedbackId);
-  }, [feedbackId, getComments]);
-
-  return (
-    <section>
-      <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
-        <h2 className="text-xl">{comments.length} Comments</h2>
-
-        {comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
-        ))}
-
-        {commentsLoading && (
-          <div className="flex items-center justify-center min-h-[10rem]">
-            <LoadingSpinner type={"medium"} />
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}

@@ -3,8 +3,7 @@ import { useState } from "react";
 import ParsedText from "./ParsedText";
 import { ReplyPost } from "../features/reply/ReplyPost";
 
-export function User({ user, commentId }) {
-  const [reply, setReply] = useState("");
+export function User({ user, commentId, replies, setReplies }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleReply() {
@@ -39,10 +38,11 @@ export function User({ user, commentId }) {
 
       {isOpen && (
         <ReplyPost
+          commentId={commentId}
           username={user.username}
-          reply={reply}
-          setReply={setReply}
           setIsOpen={setIsOpen}
+          replies={replies}
+          setReplies={setReplies}
         />
       )}
     </>

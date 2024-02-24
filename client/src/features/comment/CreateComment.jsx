@@ -3,9 +3,16 @@ import { useComments } from "../../contexts/CommentsContext";
 import FormRow from "../../ui/FormRow";
 import TextAreaField from "../../ui/TextAreaField";
 
+const errorOptions = {
+  required: "Can't be empty",
+  validate: (value) => value.trim() !== "" || "Can't be empty",
+};
+
 export function CreateComment({ feedbackId }) {
-  const { handleSubmit, register, watch, reset } = useForm();
+  const { handleSubmit, register, watch, reset, formState } = useForm();
   const { createComment, commentsLoading } = useComments();
+
+  const { errors } = formState;
 
   function onSubmit(data) {
     const { newComment } = data;
@@ -20,9 +27,14 @@ export function CreateComment({ feedbackId }) {
       <h2 className="mb-4 text-xl">Add Comment</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow>
+        <FormRow error={errors?.newComment?.message}>
           <div className="h-36 mt-6 mb-12">
-            <TextAreaField name={"newComment"} register={register} />
+            <TextAreaField
+              name={"newComment"}
+              register={register}
+              options={errorOptions}
+              error={errors?.newComment?.message}
+            />
           </div>
         </FormRow>
 
