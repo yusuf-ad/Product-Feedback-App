@@ -2,9 +2,10 @@ import { User } from "../../ui/User";
 import { useReplies } from "../../contexts/RepliesContext";
 import { useEffect, useState } from "react";
 
-function Comment({ comment, commentId }) {
-  const [replies, setReplies] = useState([]);
+function Comment({ comment }) {
+  const { _id: commentId } = comment;
 
+  const [replies, setReplies] = useState([]);
   const { getReplies } = useReplies();
 
   useEffect(() => {
@@ -19,10 +20,15 @@ function Comment({ comment, commentId }) {
 
   return (
     <div className="mt-8 flex flex-col gap-4 border-b pb-0 pt-2 last:border-0 last:pb-4  ">
-      <User user={comment} commentId={comment._id} />
+      <User
+        user={comment}
+        commentId={commentId}
+        replies={replies}
+        setReplies={setReplies}
+      />
 
       <ReplyList
-        commentId={comment._id}
+        commentId={commentId}
         replies={replies}
         setReplies={setReplies}
       />

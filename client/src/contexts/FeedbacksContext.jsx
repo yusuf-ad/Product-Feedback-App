@@ -155,8 +155,6 @@ function FeedbacksProvider({ children }) {
       });
       const { data } = await res.json();
 
-      console.log(data);
-
       const filteredFeedbacks = feedbacks.filter(
         (item) => item._id !== data._id
       );

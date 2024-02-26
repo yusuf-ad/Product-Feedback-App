@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useComments } from "../../contexts/CommentsContext";
 import FormRow from "../../ui/FormRow";
 import TextAreaField from "../../ui/TextAreaField";
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
 const errorOptions = {
   required: "Can't be empty",
@@ -11,6 +12,7 @@ const errorOptions = {
 export function CreateComment({ feedbackId }) {
   const { handleSubmit, register, watch, reset, formState } = useForm();
   const { createComment, commentsLoading } = useComments();
+  const { setCurrentFeedback } = useFeedbacks();
 
   const { errors } = formState;
 
@@ -18,6 +20,11 @@ export function CreateComment({ feedbackId }) {
     const { newComment } = data;
 
     createComment(feedbackId, newComment);
+
+    setCurrentFeedback((currentFeedback) => ({
+      ...currentFeedback,
+      totalComments: currentFeedback.totalComments + 1,
+    }));
 
     reset();
   }
