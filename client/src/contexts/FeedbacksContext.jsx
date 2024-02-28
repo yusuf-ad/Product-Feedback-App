@@ -1,13 +1,6 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 import BASE_URL from "../utils/BASE_URL";
-import { toCamelCase } from "../utils/toCamelCase";
 
 // 1) create context
 const FeedbacksContext = createContext({
@@ -29,89 +22,53 @@ const FeedbacksContext = createContext({
 
 // 2) create provider
 function FeedbacksProvider({ children }) {
-  const [currentFeedback, setCurrentFeedback] = useState({});
-
   const [feedbacks, setFeedbacks] = useState([]);
-
-  const plannedFeedbacks = feedbacks.filter((fb) => fb.status === "Planned");
-  const progressFeedbacks = feedbacks.filter(
-    (fb) => fb.status === "In-Progress"
-  );
-  const liveFeedbacks = feedbacks.filter((fb) => fb.status === "Live");
-
-  const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
-
-  const [sortBy, setSortBy] = useState("Most upvotes");
-  const [activeFilter, setActiveFilter] = useState("All");
-
+  const [currentFeedback, setCurrentFeedback] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // ! The problem might be arising because Array.sort() mutates the original array in place,
-    // ! causing unexpected behavior when you set the state based on the sorted array directly.
+  const suggestionFeedbacks = feedbacks.filter(
+    (fb) => fb.status?.toLowerCase() === "suggestion"
+  );
 
-    let sorted;
+  const plannedFeedbacks = feedbacks.filter(
+    (fb) => fb.status?.toLowerCase() === "planned"
+  );
 
-    if (!sortedFeedbacks)
-      sorted = [...feedbacks].filter((fb) => fb.status === "Suggestion");
-    // Create a new array instance
-    else
-      sorted = [...sortedFeedbacks].filter((fb) => fb.status === "Suggestion");
+  const progressFeedbacks = feedbacks.filter(
+    (fb) => fb.status?.toLowerCase() === "in-progress"
+  );
+  const liveFeedbacks = feedbacks.filter(
+    (fb) => fb.status?.toLowerCase() === "live"
+  );
 
-    switch (toCamelCase(sortBy)) {
-      case "mostUpvotes":
-        sorted.sort((a, b) => b["totalUpvotes"] - a["totalUpvotes"]);
-        setSortedFeedbacks([...sorted]);
-        break;
-      case "leastUpvotes":
-        sorted.sort((a, b) => a["totalUpvotes"] - b["totalUpvotes"]);
-        setSortedFeedbacks([...sorted]); // Set a new sorted array
-        break;
-      case "mostComments":
-        sorted.sort((a, b) => b["totalComments"] - a["totalComments"]);
-        setSortedFeedbacks([...sorted]); // Set a new sorted array
-        break;
-      case "leastComments":
-        sorted.sort((a, b) => a["totalComments"] - b["totalComments"]);
-        setSortedFeedbacks([...sorted]); // Set a new sorted array
-        break;
-      default:
-        throw new Error("Error has occurred in sorting");
+  const getAllFeedbacks = useCallback(async function () {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/feedbacks`);
+      const { data } = await res.json();
+
+      console.log(data);
+      setFeedbacks(data.feedbacks);
+    } catch (err) {
+      console.log("ERR 🔥", err.message);
+    } finally {
+      setIsLoading(false);
     }
-  }, [sortBy, feedbacks]);
+  }, []);
 
-  useEffect(() => {
-    let filtered = [...feedbacks].filter((fb) => fb.status === "Suggestion"); // Create a new array instance
+  const handleGetFeedback = useCallback(async function (id) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/feedbacks/${id}`);
+      const { data } = await res.json();
 
-    switch (activeFilter) {
-      case "All":
-        setSortedFeedbacks(filtered);
-        break;
-
-      default:
-        filtered = filtered.filter((fb) => fb.category === activeFilter);
-        setSortedFeedbacks([...filtered]);
+      setCurrentFeedback(data.feedback);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  }, [activeFilter, feedbacks]);
-
-  useEffect(() => {
-    async function getFeedbacks() {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`${BASE_URL}/feedbacks`);
-        const { data } = await res.json();
-
-        console.log(data);
-        setFeedbacks(data.feedbacks);
-      } catch (err) {
-        console.log("ERR 🔥", err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    getFeedbacks();
-  }, [currentFeedback]);
+  }, []);
 
   async function handleAddFeedback(feedback) {
     setIsLoading(true);
@@ -130,20 +87,6 @@ function FeedbacksProvider({ children }) {
       setIsLoading(false);
     }
   }
-
-  const handleGetFeedback = useCallback(async function (id) {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`${BASE_URL}/feedbacks/${id}`);
-      const { data } = await res.json();
-
-      setCurrentFeedback(data.feedback);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
 
   const handleUpdateFeedback = async function (id, newFeedback) {
     setIsLoading(true);
@@ -216,12 +159,9 @@ function FeedbacksProvider({ children }) {
         currentFeedback,
         setCurrentFeedback,
         feedbacks,
-        activeFilter,
-        setActiveFilter,
-        sortBy,
-        setSortBy,
-        sortedFeedbacks,
         setFeedbacks,
+
+        getAllFeedbacks,
         handleAddFeedback,
         handleGetFeedback,
         handleUpdateFeedback,
@@ -230,9 +170,10 @@ function FeedbacksProvider({ children }) {
         isLoading,
         setIsLoading,
 
+        suggestionFeedbacks,
+        plannedFeedbacks,
         progressFeedbacks,
         liveFeedbacks,
-        plannedFeedbacks,
       }}
     >
       {children}

@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import SortButton from "../SortButton";
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
-function SuggestionsHeader({ numFeedbacks }) {
+function SuggestionsHeader() {
+  const { suggestionFeedbacks } = useFeedbacks();
+
   return (
     <header className="flex flex-col gap-8 rounded-xl bg-grey-darker px-4 py-4 md:flex-row md:px-6  md:py-4  ">
       <div className="flex justify-between md:flex md:justify-normal  md:gap-4 ">
@@ -12,7 +15,7 @@ function SuggestionsHeader({ numFeedbacks }) {
             alt="bulb"
           />
           <p className="font-bold text-white  md:mt-1">
-            {numFeedbacks} Suggestions
+            {suggestionFeedbacks.length} Suggestions
           </p>
         </div>
         <SortButton />

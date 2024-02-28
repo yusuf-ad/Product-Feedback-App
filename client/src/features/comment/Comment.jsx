@@ -19,7 +19,7 @@ function Comment({ comment }) {
   }, [commentId, getReplies]);
 
   return (
-    <div className="mt-8 flex flex-col gap-4 border-b pb-0 pt-2 last:border-0 last:pb-4  ">
+    <div className="mt-8 flex flex-col gap-4 border-b pb-0 pt-2 last:border-0 last:pb-4">
       <User
         user={comment}
         commentId={commentId}

@@ -40,7 +40,7 @@ function Feedback({ feedback }) {
             {feedback.title}
           </h4>
           <p className="text-gray-600">{feedback.details}</p>
-          <p className="mt-3 inline-block  rounded-xl bg-grey-light px-4 py-2 font-bold text-blue-default">
+          <p className="mt-3 inline-block  rounded-xl bg-grey-light px-4 py-2 font-bold text-blue-default capitalize">
             {feedback.category}
           </p>
         </div>
