@@ -106,3 +106,7 @@ Their main focus should be:
 2. responding to users' interactions.
 
 pageleri iyi ayır
+
+enum ekle categoryle suggestiona
+
+geri dönerken direkt main pagee dönme queue da eleman yoksa dön yoksa geri dön

@@ -1,6 +1,7 @@
 import { User } from "../../ui/User";
 import { useReplies } from "../../contexts/RepliesContext";
 import { useEffect, useState } from "react";
+import { ReplyList } from "../reply/ReplyList";
 
 function Comment({ comment }) {
   const { _id: commentId } = comment;
@@ -31,26 +32,18 @@ function Comment({ comment }) {
         commentId={commentId}
         replies={replies}
         setReplies={setReplies}
+        render={(userReply) => (
+          <User
+            key={userReply._id}
+            user={userReply}
+            commentId={commentId}
+            replies={replies}
+            setReplies={setReplies}
+          />
+        )}
       />
     </div>
   );
 }
 
 export default Comment;
-
-function ReplyList({ commentId, replies, setReplies }) {
-  return (
-    <div className="relative mt-6 flex w-full flex-col gap-8 self-end pl-12">
-      <div className="absolute -top-14 left-6  h-[100%] w-[1px] bg-gray-300/80"></div>
-      {replies.map((userReply) => (
-        <User
-          key={userReply._id}
-          user={userReply}
-          commentId={commentId}
-          replies={replies}
-          setReplies={setReplies}
-        />
-      ))}
-    </div>
-  );
-}

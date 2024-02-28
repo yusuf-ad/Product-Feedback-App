@@ -15,10 +15,10 @@ import Roadmap from "./ui/Roadmap";
 
 function App() {
   return (
-    <FeedbacksProvider>
-      <CommentsProvider>
-        <RepliesProvider>
-          <BrowserRouter>
+    <BrowserRouter>
+      <FeedbacksProvider>
+        <CommentsProvider>
+          <RepliesProvider>
             <Routes>
               <Route index element={<AppLayout />} />
               <Route path="/roadmap" element={<Roadmap />} />
@@ -30,10 +30,10 @@ function App() {
               <Route path="/feedback/edit/:id" element={<FeedbackEdit />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
-          </BrowserRouter>
-        </RepliesProvider>
-      </CommentsProvider>
-    </FeedbacksProvider>
+          </RepliesProvider>
+        </CommentsProvider>
+      </FeedbacksProvider>
+    </BrowserRouter>
   );
 }
 

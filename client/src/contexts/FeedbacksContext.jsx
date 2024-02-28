@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useState } from "react";
-
+import { useSearchParams } from "react-router-dom";
 import BASE_URL from "../utils/BASE_URL";
+
+import { filterFeedbacks } from "../utils/filterFeedbacks";
 
 // 1) create context
 const FeedbacksContext = createContext({
@@ -26,20 +28,20 @@ function FeedbacksProvider({ children }) {
   const [currentFeedback, setCurrentFeedback] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const suggestionFeedbacks = feedbacks.filter(
-    (fb) => fb.status?.toLowerCase() === "suggestion"
-  );
+  let suggestionFeedbacks = filterFeedbacks(feedbacks, "suggestion");
+  const plannedFeedbacks = filterFeedbacks(feedbacks, "planned");
+  const progressFeedbacks = filterFeedbacks(feedbacks, "in-progress");
+  const liveFeedbacks = filterFeedbacks(feedbacks, "live");
 
-  const plannedFeedbacks = feedbacks.filter(
-    (fb) => fb.status?.toLowerCase() === "planned"
-  );
+  // filter category
+  const [searchParams] = useSearchParams();
+  const activeCategory = searchParams.get("category") || "all";
 
-  const progressFeedbacks = feedbacks.filter(
-    (fb) => fb.status?.toLowerCase() === "in-progress"
-  );
-  const liveFeedbacks = feedbacks.filter(
-    (fb) => fb.status?.toLowerCase() === "live"
-  );
+  if (activeCategory !== "all") {
+    suggestionFeedbacks = suggestionFeedbacks.filter(
+      (fb) => fb.category.toLowerCase() === activeCategory.toLowerCase()
+    );
+  }
 
   const getAllFeedbacks = useCallback(async function () {
     setIsLoading(true);
