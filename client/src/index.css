@@ -41,7 +41,6 @@
 
 @layer utilities {
   .active {
-    transform: translateY(80px);
     pointer-events: all;
     opacity: 1;
     transition: all 0.3s;

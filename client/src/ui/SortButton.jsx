@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+
 const sortItems = [
   "Most upvotes",
   "Least upvotes",
@@ -6,20 +10,49 @@ const sortItems = [
 ];
 
 function SortButton() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isMenuActive, setIsMenuActive] = useState(false);
+
+  const sortBy = searchParams.get("sortBy") || sortItems[0].toLowerCase();
+
+  function handleToggle() {
+    setIsMenuActive(!isMenuActive);
+  }
+
+  function handleSelect(item) {
+    searchParams.set("sortBy", item.toLowerCase());
+    setSearchParams(searchParams);
+
+    setIsMenuActive(false);
+  }
+
   return (
     <div className="relative mt-1 flex items-center">
-      <button className="text-white hover:text-grey-hover">
+      <button
+        onClick={handleToggle}
+        className="text-white hover:text-grey-hover"
+      >
         <p>
-          Sort by: <span className="mr-2 font-bold">{sortItems[0]}</span>
+          Sort by:{" "}
+          <span className="mr-2 font-bold">
+            {capitalizeFirstLetter(sortBy)}
+          </span>
           <span>
             <i className="fa-solid fa-chevron-down text-xs"></i>
           </span>
         </p>
       </button>
-      <div className="pointer-events-none absolute top-0 w-56 translate-y-0 rounded-xl bg-white opacity-0 shadow-sm duration-300 ">
+
+      <div
+        className={`${isMenuActive ? "active translate-y-14" : ""} pointer-events-none absolute top-0 w-56 translate-y-0 rounded-xl bg-white opacity-0 shadow-sm duration-300`}
+      >
         <ul>
           {sortItems.map((item) => (
-            <SortItem key={item} isActive={sortItems[0] === item}>
+            <SortItem
+              key={item}
+              isActive={sortBy === item.toLowerCase()}
+              handleSelect={handleSelect}
+            >
               {item}
             </SortItem>
           ))}
@@ -29,9 +62,9 @@ function SortButton() {
   );
 }
 
-function SortItem({ isActive, children }) {
+function SortItem({ isActive, children, handleSelect }) {
   return (
-    <li className="sortItem">
+    <li onClick={() => handleSelect(children)} className="sortItem">
       {children}
       {isActive && (
         <span className="text-purple-default">

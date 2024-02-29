@@ -18,6 +18,7 @@ function SuggestionsHeader() {
             {suggestionFeedbacks.length} Suggestions
           </p>
         </div>
+
         <SortButton />
       </div>
 

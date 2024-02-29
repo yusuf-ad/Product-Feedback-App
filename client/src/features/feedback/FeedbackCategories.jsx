@@ -10,7 +10,9 @@ function FeedbackCategories() {
     searchParams.get("category") || categoryList[0].toLowerCase();
 
   function handleClick(category) {
-    setSearchParams({ category: category.toLowerCase() });
+    searchParams.set("category", category.toLowerCase());
+
+    setSearchParams(searchParams);
   }
 
   return (

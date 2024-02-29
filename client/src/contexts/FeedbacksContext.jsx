@@ -43,6 +43,21 @@ function FeedbacksProvider({ children }) {
     );
   }
 
+  // sort category
+  const activeSort = searchParams.get("sortBy") || "most upvotes";
+
+  const [order, field] = activeSort.split(" ");
+
+  const modifier = order === "least" ? 1 : -1;
+
+  suggestionFeedbacks = suggestionFeedbacks.sort((a, b) => {
+    if (field === "upvotes") {
+      return (a.totalUpvotes - b.totalUpvotes) * modifier;
+    }
+
+    return (a.totalComments - b.totalComments) * modifier;
+  });
+
   const getAllFeedbacks = useCallback(async function () {
     setIsLoading(true);
     try {
