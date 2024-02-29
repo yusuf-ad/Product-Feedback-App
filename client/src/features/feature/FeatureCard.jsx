@@ -10,7 +10,7 @@ function FeatureCard({ feature, color }) {
 
   return (
     <li
-      className={`border-t-8 border-t-${color} rounded-md bg-white px-8 py-10 `}
+      className={`border-t-8 border-t-${color} rounded-md bg-white px-8 py-6`}
     >
       <p className="flex items-center text-lg text-grey-dark">
         <span className={`mr-4 block h-3 w-3 rounded-full bg-${color} `}></span>
