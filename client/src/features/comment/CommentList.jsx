@@ -6,7 +6,6 @@ import { useReplies } from "../../contexts/RepliesContext";
 
 export function CommentList({ feedbackId }) {
   const { comments, getComments, commentsLoading } = useComments();
-  const { isLoading: isReplyLoading } = useReplies();
 
   useEffect(() => {
     getComments(feedbackId);
@@ -25,7 +24,7 @@ export function CommentList({ feedbackId }) {
           />
         ))}
 
-        {(commentsLoading || isReplyLoading) && (
+        {commentsLoading && (
           <div className="flex items-center justify-center min-h-[10rem]">
             <LoadingSpinner type={"medium"} />
           </div>

@@ -36,6 +36,7 @@ export function ReplyPost({ commentId, username, setIsOpen, setReplies }) {
           register={register}
           options={errorOptions}
           error={errors?.newReply?.message}
+          disabled={isLoading}
         />
         {errors?.newReply?.message && <Error>{errors.newReply.message}</Error>}
       </div>
