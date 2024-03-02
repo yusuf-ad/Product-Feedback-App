@@ -3,6 +3,7 @@ import { useReplies } from "../../contexts/RepliesContext";
 
 import Error from "../../ui/Error";
 import TextAreaField from "../../ui/TextAreaField";
+import { useRef } from "react";
 
 const errorOptions = {
   required: "Can't be empty",
@@ -10,7 +11,9 @@ const errorOptions = {
 };
 
 export function ReplyPost({ commentId, username, setIsOpen, setReplies }) {
-  const { handleSubmit, register, formState } = useForm();
+  const { handleSubmit, register, formState } = useForm({
+    defaultValues: { newReply: `@${username}` },
+  });
   const { createReply, isLoading } = useReplies();
 
   const { errors } = formState;

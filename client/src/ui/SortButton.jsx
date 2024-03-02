@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 const sortItems = [
   "Most upvotes",
@@ -14,6 +15,8 @@ function SortButton() {
   const [isMenuActive, setIsMenuActive] = useState(false);
 
   const sortBy = searchParams.get("sortBy") || sortItems[0].toLowerCase();
+
+  const { button, menu } = useClickOutside(() => setIsMenuActive(false));
 
   function handleToggle() {
     setIsMenuActive(!isMenuActive);
@@ -29,6 +32,7 @@ function SortButton() {
   return (
     <div className="relative mt-1 flex items-center">
       <button
+        ref={button}
         onClick={handleToggle}
         className="text-white hover:text-grey-hover"
       >
@@ -44,6 +48,7 @@ function SortButton() {
       </button>
 
       <div
+        ref={menu}
         className={`${isMenuActive ? "active translate-y-14" : ""} pointer-events-none absolute top-0 w-56 translate-y-0 rounded-xl bg-white opacity-0 shadow-sm duration-300`}
       >
         <ul>

@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import DropdownMenu from "./DropdownMenu";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 function SelectionField({ menuItems, name, setValue, active }) {
   const [isMenuActive, setIsMenuActive] = useState(false);
 
-  const menu = useRef(null);
-  const dropdownButton = useRef(null);
+  const { menu, button: dropdownButton } = useClickOutside(() => {
+    setIsMenuActive(false);
+  });
 
   function toggleMenu() {
     setIsMenuActive(!isMenuActive);
@@ -17,23 +19,6 @@ function SelectionField({ menuItems, name, setValue, active }) {
 
     toggleMenu();
   }
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (
-        menu.current &&
-        !menu.current.contains(e.target) &&
-        !dropdownButton.current.contains(e.target)
-      ) {
-        setIsMenuActive(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isMenuActive]);
 
   return (
     <div className="relative flex items-center">
