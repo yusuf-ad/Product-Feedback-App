@@ -12,7 +12,7 @@ export function User({ user, commentId, replies, setReplies }) {
 
   return (
     <>
-      <div className="flex items-center  gap-6 last:mb-8">
+      <div className="flex items-center gap-6 last:mb-4">
         <div className="h-14 w-14 flex-shrink-0 self-start">
           <img className="rounded-full" src={user.userImg} alt="user" />
         </div>

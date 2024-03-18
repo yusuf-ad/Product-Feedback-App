@@ -64,7 +64,6 @@ function FeedbacksProvider({ children }) {
       const res = await fetch(`${BASE_URL}/feedbacks`);
       const { data } = await res.json();
 
-      console.log(data);
       setFeedbacks(data.feedbacks);
     } catch (err) {
       console.log("ERR 🔥", err.message);

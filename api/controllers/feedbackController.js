@@ -43,8 +43,6 @@ exports.createFeedback = async (req, res) => {
   try {
     const feedback = await Feedback.create(req.body);
 
-    console.log(req.body);
-
     res.status(200).json({
       status: "success",
       data: {
